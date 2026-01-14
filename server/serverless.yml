@@ -1,0 +1,62 @@
+# Serverless Framework Configuration for Unleash Server
+# Summary: This configuration deploys a serverless application on AWS using Lambda, API Gateway, and DynamoDB.
+# It sets up an API for managing point-cloud annotations with CRUD operations scoped by modelId.
+# The service includes IAM roles for DynamoDB access and automatically creates the required DynamoDB table.
+
+service: unleash-server
+
+frameworkVersion: '3'
+
+provider:
+  name: aws
+  runtime: nodejs18.x  # Node.js runtime version for Lambda functions
+  region: ap-southeast-2 # 
+  environment:
+    ANNOTATIONS_TABLE: ${self:custom.tableName}  # Environment variable for table name
+  iamRoleStatements:  # IAM permissions for Lambda execution role
+    - Effect: Allow
+      Action:
+        - dynamodb:GetItem
+        - dynamodb:PutItem
+        - dynamodb:UpdateItem
+        - dynamodb:DeleteItem
+        - dynamodb:Query
+      Resource: arn:aws:dynamodb:${self:provider.region}:*:table/${self:custom.tableName}
+
+custom:  # Custom variables for reusability
+  tableName: Annotations
+
+functions:  # Define Lambda functions
+  annotations:
+    handler: src/handlers/annotations.handler  # Path to the handler function
+    events:  # API Gateway events that trigger the function
+      - http:
+          path: models/{modelId}/annotations
+          method: get
+      - http:
+          path: models/{modelId}/annotations
+          method: post
+      - http:
+          path: models/{modelId}/annotations/{id}
+          method: patch
+      - http:
+          path: models/{modelId}/annotations/{id}
+          method: delete
+
+resources:  # CloudFormation resources to create
+  Resources:
+    AnnotationsTable:  # DynamoDB table for storing annotations
+      Type: AWS::DynamoDB::Table
+      Properties:
+        TableName: ${self:custom.tableName}
+        AttributeDefinitions:  # Define key attributes
+          - AttributeName: modelId
+            AttributeType: S  # String type
+          - AttributeName: id
+            AttributeType: S
+        KeySchema:  # Primary key structure
+          - AttributeName: modelId
+            KeyType: HASH  # Partition key
+          - AttributeName: id
+            KeyType: RANGE  # Sort key
+        BillingMode: PAY_PER_REQUEST  # On-demand pricing

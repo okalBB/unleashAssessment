@@ -1,0 +1,47 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <link rel="icon" type="image/svg+xml" href="/vite.svg" />
+
+    <!-- Potree CSS -->
+    <link rel="stylesheet" href="/Potree_1.8.2/build/potree/potree.css" />
+    <link rel="stylesheet" href="/Potree_1.8.2/libs/jquery-ui/jquery-ui.min.css" />
+    <link rel="stylesheet" href="/Potree_1.8.2/libs/perfect-scrollbar/css/perfect-scrollbar.css" />
+    <link rel="stylesheet" href="/Potree_1.8.2/libs/spectrum/spectrum.css" />
+    <link rel="stylesheet" href="/Potree_1.8.2/libs/jstree/themes/mixed/style.css" />
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>client</title>
+  </head>
+  <body>
+    <div id="root"></div>
+
+    <!-- Potree deps (ORDER MATTERS) -->
+    <script src="/Potree_1.8.2/libs/jquery/jquery-3.1.1.min.js"></script>
+    <script src="/Potree_1.8.2/libs/jquery-ui/jquery-ui.min.js"></script>
+    <script src="/Potree_1.8.2/libs/spectrum/spectrum.js"></script>
+    <script src="/Potree_1.8.2/libs/perfect-scrollbar/js/perfect-scrollbar.jquery.js"></script>
+
+    <script src="/Potree_1.8.2/libs/three.js/build/three.min.js"></script>
+   
+    <script src="/Potree_1.8.2/libs/other/BinaryHeap.js"></script>
+    <script src="/Potree_1.8.2/libs/tween/tween.min.js"></script>
+    <script src="/Potree_1.8.2/libs/d3/d3.min.js"></script>
+    <script src="/Potree_1.8.2/libs/proj4/proj4.js"></script>
+    <script src="/Potree_1.8.2/libs/i18next/i18next.js"></script>
+
+    <!-- LAZ / LAS support -->
+    <script src="/Potree_1.8.2/libs/plasio/vendor/bluebird.js"></script>
+    <script src="/Potree_1.8.2/libs/plasio/js/laslaz.js"></script>
+
+    <!-- Potree -->
+   
+<script src="/Potree_1.8.2/libs/jstree/jstree.js"></script>
+
+    <script src="/Potree_1.8.2/build/potree/potree.js"></script>
+   
+    <!-- Your app -->
+    <script type="module" src="/src/main.tsx"></script>
+  </body>
+</html>
